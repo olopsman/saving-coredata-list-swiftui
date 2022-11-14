@@ -11,15 +11,12 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+    @StateObject var vm = ContentVM()
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(items) { item in
+                ForEach(vm.items) { item in
                     NavigationLink {
                         Text("Item at \(item.timestamp!, formatter: itemFormatter)")
                     } label: {
@@ -27,6 +24,7 @@ struct ContentView: View {
                     }
                 }
                 .onDelete(perform: deleteItems)
+                .onMove(perform: move)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -46,9 +44,11 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.timestamp = Date()
+            newItem.order = Int16(vm.items.count)
 
             do {
                 try viewContext.save()
+                vm.loadItems()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -60,7 +60,7 @@ struct ContentView: View {
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map { vm.items[$0] }.forEach(viewContext.delete)
 
             do {
                 try viewContext.save()
@@ -70,6 +70,35 @@ struct ContentView: View {
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
+        }
+    }
+    
+    private func move( from source: IndexSet, to destination: Int)
+    {
+        // Make an array of items from fetched results
+        var revisedItems: [ Item ] = vm.items.map{ $0 }
+
+        // change the order of the items in the array
+        revisedItems.move(fromOffsets: source, toOffset: destination )
+
+        // update the userOrder attribute in revisedItems to
+        // persist the new order. This is done in reverse order
+        // to minimize changes to the indices.
+        for reverseIndex in stride( from: revisedItems.count - 1,
+                                    through: 0,
+                                    by: -1 )
+        {
+            revisedItems[ reverseIndex ].order =
+                Int16( reverseIndex )
+        }
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }

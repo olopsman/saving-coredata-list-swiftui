@@ -30,6 +30,10 @@ struct PersistenceController {
 
     let container: NSPersistentContainer
 
+    var viewContext: NSManagedObjectContext {
+        return container.viewContext
+    }
+
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Saving_CoreData_List_Swiftui")
         if inMemory {
@@ -52,5 +56,33 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    //MARK: Fetch Items
+    func fetchItems(predicate: NSPredicate?) -> [Item] {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        //sort order
+        let sortOrder = NSSortDescriptor(key: "order", ascending: true)
+        request.sortDescriptors = [sortOrder]
+        
+        if let predicate = predicate {
+            request.predicate = predicate
+        }
+        
+        do {
+            return try viewContext.fetch(request)
+        } catch {
+            return []
+        }
+    }
+    //MARK: Save object graph
+    func save() {
+        do {
+            try viewContext.save()
+        } catch {
+            viewContext.rollback()
+            print(error)
+        }
     }
 }

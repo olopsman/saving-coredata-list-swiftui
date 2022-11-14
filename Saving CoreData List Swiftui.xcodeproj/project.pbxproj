@@ -13,6 +13,7 @@
 		BED6ECD629223F0800F690A7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BED6ECD529223F0800F690A7 /* Preview Assets.xcassets */; };
 		BED6ECD829223F0800F690A7 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED6ECD729223F0800F690A7 /* Persistence.swift */; };
 		BED6ECDB29223F0800F690A7 /* Saving_CoreData_List_Swiftui.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BED6ECD929223F0800F690A7 /* Saving_CoreData_List_Swiftui.xcdatamodeld */; };
+		BED6ECE22922413300F690A7 /* ContentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED6ECE12922413300F690A7 /* ContentVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		BED6ECD529223F0800F690A7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BED6ECD729223F0800F690A7 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		BED6ECDA29223F0800F690A7 /* Saving_CoreData_List_Swiftui.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Saving_CoreData_List_Swiftui.xcdatamodel; sourceTree = "<group>"; };
+		BED6ECE12922413300F690A7 /* ContentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			children = (
 				BED6ECCE29223F0700F690A7 /* Saving_CoreData_List_SwiftuiApp.swift */,
 				BED6ECD029223F0700F690A7 /* ContentView.swift */,
+				BED6ECE12922413300F690A7 /* ContentVM.swift */,
 				BED6ECD229223F0800F690A7 /* Assets.xcassets */,
 				BED6ECD729223F0800F690A7 /* Persistence.swift */,
 				BED6ECD929223F0800F690A7 /* Saving_CoreData_List_Swiftui.xcdatamodeld */,
@@ -145,6 +148,7 @@
 			files = (
 				BED6ECDB29223F0800F690A7 /* Saving_CoreData_List_Swiftui.xcdatamodeld in Sources */,
 				BED6ECD829223F0800F690A7 /* Persistence.swift in Sources */,
+				BED6ECE22922413300F690A7 /* ContentVM.swift in Sources */,
 				BED6ECD129223F0700F690A7 /* ContentView.swift in Sources */,
 				BED6ECCF29223F0700F690A7 /* Saving_CoreData_List_SwiftuiApp.swift in Sources */,
 			);
